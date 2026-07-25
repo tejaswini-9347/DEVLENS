@@ -28,3 +28,7 @@ export const getAnalytics = async (username) => {
   const response = await API.get(`/analytics/${username}`);
   return response.data;
 };
+export const getActivityAnalytics = async (username) => {
+  const response = await API.get(`/activity/${username}`);
+  return response.data;
+};
