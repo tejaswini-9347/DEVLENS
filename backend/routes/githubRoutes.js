@@ -6,6 +6,7 @@ import {
   getFollowers,
   getFollowing,
   getAnalytics,
+  getActivityAnalytics,
 } from "../controllers/githubController.js";
 
 const router = express.Router();
@@ -24,5 +25,8 @@ router.get("/following/:username", getFollowing);
 
 // Analytics
 router.get("/analytics/:username", getAnalytics);
+
+// Activity Analytics
+router.get("/activity/:username", getActivityAnalytics);
 
 export default router;

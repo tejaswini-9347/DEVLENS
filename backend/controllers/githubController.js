@@ -3,8 +3,10 @@ import {
   fetchUserRepositories,
   fetchFollowers,
   fetchFollowing,
+  fetchContributionData,
 } from "../services/githubService.js";
 import { calculateAnalytics } from "../utils/analytics.js";
+import { calculateActivityAnalytics } from "../utils/activityAnalytics.js";
 export const getGithubProfile = async (req, res) => {
   try {
     const { username } = req.params;
@@ -123,6 +125,58 @@ export const getAnalytics = async (req, res) => {
 
     res.status(500).json({
       message: "Analytics not found",
+      error: error.message,
+    });
+  }
+};
+export const getContributions = async (req, res) => {
+  try {
+    const { username } = req.params;
+
+    const contributionData = await fetchContributionData(username);
+
+    res.status(200).json({
+      totalContributions: contributionData.totalContributions,
+      weeks: contributionData.weeks,
+    });
+
+  } catch (error) {
+    console.error("Contribution API Error:", error);
+
+    res.status(500).json({
+      message: "Unable to fetch contribution data",
+      error: error.message,
+    });
+  }
+};
+export const getActivityAnalytics = async (req, res) => {
+  try {
+    const { username } = req.params;
+
+    // Fetch repositories
+    const githubRepositories = await fetchUserRepositories(username);
+
+    // Format repositories
+    const repositories = githubRepositories.map((repo) => ({
+      name: repo.name,
+      description: repo.description,
+      language: repo.language,
+      stars: repo.stargazers_count,
+      forks: repo.forks_count,
+      updatedAt: repo.updated_at,
+      repositoryUrl: repo.html_url,
+    }));
+
+    // Calculate activity analytics
+    const activityAnalytics = calculateActivityAnalytics(repositories);
+
+    res.status(200).json(activityAnalytics);
+
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message: "Activity analytics not found",
       error: error.message,
     });
   }

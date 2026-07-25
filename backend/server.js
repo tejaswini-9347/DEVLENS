@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import githubRoutes from "./routes/githubRoutes.js";
 
 dotenv.config();
+console.log("GitHub Token:", process.env.GITHUB_TOKEN?.slice(0, 8));
 
 const app = express();
 

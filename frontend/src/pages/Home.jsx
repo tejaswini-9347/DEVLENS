@@ -13,6 +13,8 @@ import ErrorMessage from "../components/ErrorMessage";
 import LanguageChart from "../components/LanguageChart";
 import StarsChart from "../components/StarsChart";
 import ThemeToggle from "../components/ThemeToggle";
+import ActivityDashboard from "../components/ActivityDashboard";
+import ActivityTimeline from "../components/ActivityTimeline";
 
 import { useTheme } from "../context/ThemeContext";
 
@@ -21,6 +23,7 @@ import {
   getRepositories,
   getFollowers,
   getFollowing,
+  getActivityAnalytics,
 } from "../services/githubService";
 
 
@@ -31,6 +34,7 @@ function Home() {
   const [analytics,setAnalytics] = useState({});
   const [followers,setFollowers] = useState([]);
   const [following,setFollowing] = useState([]);
+  const [activityAnalytics, setActivityAnalytics] = useState(null);
 
   const [loading,setLoading] = useState(false);
   const [error,setError] = useState("");
@@ -156,6 +160,10 @@ function Home() {
 
       setFollowing(followingData);
 
+      const activityData = await getActivityAnalytics(username);
+setActivityAnalytics(activityData);
+console.log(activityData);
+
 
 
     }
@@ -175,6 +183,7 @@ function Home() {
       setAnalytics({});
       setFollowers([]);
       setFollowing([]);
+      setActivityAnalytics(null);
 
     }
 
@@ -506,11 +515,16 @@ following.length>0 &&
 following={following}
 
 />
-
+{activityAnalytics && (
+  <ActivityDashboard activity={activityAnalytics} />
+)}
 
 </div>
 
 }
+{repositories.length > 0 && (
+  <ActivityTimeline repositories={repositories} />
+)}
 
 
 
