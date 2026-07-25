@@ -32,3 +32,33 @@ export const getActivityAnalytics = async (username) => {
   const response = await API.get(`/activity/${username}`);
   return response.data;
 };
+
+export const getDeveloperScore = async (username) => {
+  const response = await API.get(`/developer-score/${username}`);
+  return response.data;
+};
+
+export const getAISummary = async (username) => {
+  const response = await API.get(`/ai-summary/${username}`);
+  return response.data;
+};
+
+export const getDetectedSkills = async (username) => {
+  const response = await API.get(`/skills/${username}`);
+  return response.data;
+};
+
+export const getCareerRecommendations = async (username) => {
+  const response = await API.get(`/career-recommendations/${username}`);
+  return response.data;
+};
+
+export const getResumeAnalysis = async (username) => {
+  const response = await API.get(`/resume-analysis/${username}`);
+  return response.data;
+};
+
+export const getGrowthPrediction = async (username) => {
+  const response = await API.get(`/growth-prediction/${username}`);
+  return response.data;
+};

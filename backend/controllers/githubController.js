@@ -7,6 +7,13 @@ import {
 } from "../services/githubService.js";
 import { calculateAnalytics } from "../utils/analytics.js";
 import { calculateActivityAnalytics } from "../utils/activityAnalytics.js";
+import { calculateDeveloperScore } from "../utils/developerScore.js";
+import generateAISummary from "../utils/aiSummary.js";
+import detectSkills from "../utils/skillDetection.js";
+import generateCareerRecommendations from "../utils/careerRecommendation.js";
+import analyzeResume from "../utils/resumeAnalysis.js";
+import predictGrowth from "../utils/growthPrediction.js";
+console.log("Developer Score:", calculateDeveloperScore);
 export const getGithubProfile = async (req, res) => {
   try {
     const { username } = req.params;
@@ -177,6 +184,243 @@ export const getActivityAnalytics = async (req, res) => {
 
     res.status(500).json({
       message: "Activity analytics not found",
+      error: error.message,
+    });
+  }
+};
+export const getDeveloperScore = async (req, res) => {
+  try {
+    const { username } = req.params;
+
+    // Fetch profile
+    const profile = await fetchUserProfile(username);
+
+    // Fetch repositories
+    const githubRepositories = await fetchUserRepositories(username);
+
+    // Format repositories
+    const repositories = githubRepositories.map((repo) => ({
+      name: repo.name,
+      language: repo.language,
+      stars: repo.stargazers_count,
+      forks: repo.forks_count,
+      updatedAt: repo.updated_at,
+    }));
+
+    // Calculate activity score
+    const activityScore = repositories.length
+      ? Math.round(
+          (repositories.filter((repo) => {
+            const updated = new Date(repo.updatedAt);
+            const sixMonthsAgo = new Date();
+
+            sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+
+            return updated >= sixMonthsAgo;
+          }).length /
+            repositories.length) *
+            100
+        )
+      : 0;
+
+    // Calculate developer score
+    const score = calculateDeveloperScore(
+      repositories,
+      profile.followers,
+      activityScore
+    );
+
+    res.status(200).json(score);
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message: "Failed to calculate developer score",
+      error: error.message,
+    });
+  }
+};
+export const getAISummary = async (req, res) => {
+  try {
+    const { username } = req.params;
+
+    // Fetch profile
+    const profile = await fetchUserProfile(username);
+
+    // Fetch repositories
+    const githubRepositories = await fetchUserRepositories(username);
+
+    // Format repositories
+    const repositories = githubRepositories.map((repo) => ({
+      name: repo.name,
+      description: repo.description,
+      language: repo.language,
+      stars: repo.stargazers_count,
+      forks: repo.forks_count,
+      updatedAt: repo.updated_at,
+      repositoryUrl: repo.html_url,
+    }));
+
+    // Calculate analytics
+    const analytics = calculateAnalytics(repositories);
+
+    // Generate AI Summary
+    const aiSummary = generateAISummary(
+      profile,
+      repositories,
+      analytics
+    );
+
+    res.status(200).json(aiSummary);
+
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message: "Failed to generate AI summary",
+      error: error.message,
+    });
+  }
+};
+export const getDetectedSkills = async (req, res) => {
+  try {
+    const { username } = req.params;
+
+    // Fetch repositories
+    const githubRepositories = await fetchUserRepositories(username);
+
+    // Format repositories
+    const repositories = githubRepositories.map((repo) => ({
+      name: repo.name,
+      description: repo.description,
+      language: repo.language,
+    }));
+
+    // Detect skills
+    const skills = detectSkills(repositories);
+
+    res.status(200).json({
+      totalSkills: skills.length,
+      skills,
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message: "Failed to detect skills",
+      error: error.message,
+    });
+  }
+};
+export const getCareerRecommendations = async (req, res) => {
+  try {
+    const { username } = req.params;
+
+    const githubRepositories = await fetchUserRepositories(username);
+
+    const repositories = githubRepositories.map((repo) => ({
+      name: repo.name,
+      description: repo.description,
+      language: repo.language,
+    }));
+
+    const skills = detectSkills(repositories);
+
+    const recommendations =
+      generateCareerRecommendations(skills);
+
+    res.status(200).json({
+      totalSkills: skills.length,
+      skills,
+      recommendations,
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message: "Failed to generate career recommendations",
+      error: error.message,
+    });
+  }
+};
+export const getResumeAnalysis = async (req, res) => {
+  try {
+    const { username } = req.params;
+
+    // Fetch profile
+    const profile = await fetchUserProfile(username);
+
+    // Fetch repositories
+    const githubRepositories = await fetchUserRepositories(username);
+
+    // Format repositories
+    const repositories = githubRepositories.map((repo) => ({
+      name: repo.name,
+      description: repo.description,
+      language: repo.language,
+      stars: repo.stargazers_count,
+      forks: repo.forks_count,
+      updatedAt: repo.updated_at,
+      repositoryUrl: repo.html_url,
+    }));
+
+    // Calculate analytics
+    const analytics = calculateAnalytics(repositories);
+
+    // Analyse resume
+    const resumeAnalysis = analyzeResume(
+      profile,
+      repositories,
+      analytics
+    );
+
+    res.status(200).json(resumeAnalysis);
+
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message: "Failed to analyse resume",
+      error: error.message,
+    });
+  }
+};
+export const getGrowthPrediction = async (req, res) => {
+  try {
+    const { username } = req.params;
+
+    // Fetch profile
+    const profile = await fetchUserProfile(username);
+
+    // Fetch repositories
+    const githubRepositories = await fetchUserRepositories(username);
+
+    // Format repositories
+    const repositories = githubRepositories.map((repo) => ({
+      name: repo.name,
+      description: repo.description,
+      language: repo.language,
+      stars: repo.stargazers_count,
+      forks: repo.forks_count,
+      updatedAt: repo.updated_at,
+      repositoryUrl: repo.html_url,
+    }));
+
+    // Calculate analytics
+    const analytics = calculateAnalytics(repositories);
+
+    // Predict growth
+    const prediction = predictGrowth(profile, analytics);
+
+    res.status(200).json(prediction);
+
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message: "Failed to predict GitHub growth",
       error: error.message,
     });
   }

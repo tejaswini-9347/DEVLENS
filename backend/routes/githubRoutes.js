@@ -7,26 +7,29 @@ import {
   getFollowing,
   getAnalytics,
   getActivityAnalytics,
+  getDeveloperScore,
+  getAISummary,
+  getDetectedSkills,
+  getCareerRecommendations,
+  getResumeAnalysis,
+  getGrowthPrediction,
 } from "../controllers/githubController.js";
 
 const router = express.Router();
 
-// Profile
 router.get("/user/:username", getGithubProfile);
-
-// Repositories
 router.get("/repos/:username", getUserRepositories);
-
-// Followers
 router.get("/followers/:username", getFollowers);
-
-// Following
 router.get("/following/:username", getFollowing);
-
-// Analytics
 router.get("/analytics/:username", getAnalytics);
-
-// Activity Analytics
 router.get("/activity/:username", getActivityAnalytics);
-
+router.get("/developer-score/:username", getDeveloperScore);
+router.get("/ai-summary/:username", getAISummary);
+router.get("/skills/:username", getDetectedSkills);
+router.get("/growth-prediction/:username", getGrowthPrediction);
+router.get(
+  "/career-recommendations/:username",
+  getCareerRecommendations
+);
+router.get("/resume-analysis/:username", getResumeAnalysis);
 export default router;
