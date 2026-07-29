@@ -68,6 +68,12 @@ export default function Sidebar() {
             AI Powered GitHub Analyzer
           </p>
         </div>
+        <Link
+  to="/resume-builder"
+  className="hover:text-blue-500"
+>
+  AI Resume Builder
+</Link>
       </div>
     </aside>
   );

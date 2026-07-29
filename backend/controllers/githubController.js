@@ -4,6 +4,7 @@ import {
   fetchFollowers,
   fetchFollowing,
   fetchContributionData,
+  getRepositoryReadme,
 } from "../services/githubService.js";
 import { calculateAnalytics } from "../utils/analytics.js";
 import { calculateActivityAnalytics } from "../utils/activityAnalytics.js";
@@ -14,7 +15,11 @@ import generateCareerRecommendations from "../utils/careerRecommendation.js";
 import analyzeResume from "../utils/resumeAnalysis.js";
 import predictGrowth from "../utils/growthPrediction.js";
 import axios from "axios";
-import { analyzeRepository } from "../services/groqService.js";
+import {
+  analyzeRepository,
+  analyzeReadme,
+  generateResume,
+} from "../services/groqService.js";
 import { calculateRepositoryHealth } from "../services/repositoryHealthService.js";
 console.log("Developer Score:", calculateDeveloperScore);
 export const getGithubProfile = async (req, res) => {
@@ -506,6 +511,53 @@ export const getRepositoryHealth = async (req, res) => {
 
     res.status(500).json({
       message: "Failed to calculate repository health",
+    });
+  }
+};
+export const analyzeRepositoryReadme = async (req, res) => {
+  try {
+    const { owner, repo } = req.params;
+
+    const readme = await getRepositoryReadme(owner, repo);
+
+    const analysis = await analyzeReadme(readme);
+
+    res.json({
+      success: true,
+      analysis,
+    });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+export const generateAIResume = async (req, res) => {
+  try {
+    const { username } = req.params;
+
+    // Fetch GitHub profile
+    const profile = await fetchUserProfile(username);
+
+    // Fetch repositories
+    const repositories = await fetchUserRepositories(username);
+
+    // Generate AI Resume
+    const resume = await generateResume(profile, repositories);
+
+    res.json({
+      success: true,
+      resume,
+    });
+  } catch (error) {
+    console.error("Resume Error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: error.message,
     });
   }
 };

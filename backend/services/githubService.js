@@ -95,10 +95,26 @@ export const fetchContributionData = async (username) => {
   return data.user.contributionsCollection.contributionCalendar;
 };
 
-export const getRepositoryHealth = async (owner, repo) => {
-  const response = await axios.get(
-    `${API_URL}/repository/${owner}/${repo}/health`
-  );
+export const getRepositoryReadme = async (owner, repo) => {
+  try {
+    const response = await axios.get(
+      `https://api.github.com/repos/${owner}/${repo}/readme`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+          Accept: "application/vnd.github+json",
+        },
+      }
+    );
 
-  return response.data;
+    const content = Buffer.from(
+      response.data.content,
+      "base64"
+    ).toString("utf-8");
+
+    return content;
+  } catch (error) {
+    console.error("README Fetch Error:", error.response?.data || error.message);
+    throw new Error("Unable to fetch README");
+  }
 };

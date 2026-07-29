@@ -80,3 +80,11 @@ export const getRepositoryHealth = async (owner, repo) => {
   const response = await API.get(`/repository/${owner}/${repo}/health`);
   return response.data;
 };
+
+export const getReadmeAnalysis = async (owner, repo) => {
+  const response = await API.get(
+    `/repository/${owner}/${repo}/readme-analysis`
+  );
+
+  return response.data;
+};
