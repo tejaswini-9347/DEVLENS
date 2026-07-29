@@ -62,3 +62,21 @@ export const getGrowthPrediction = async (username) => {
   const response = await API.get(`/growth-prediction/${username}`);
   return response.data;
 };
+
+export const getRepository = async (owner, repo) => {
+  const response = await API.get(`/repository/${owner}/${repo}`);
+  return response.data;
+};
+
+export const analyzeRepository = async (owner, repo) => {
+  const response = await API.post("/repository/analyze", {
+    owner,
+    repo,
+  });
+  return response.data;
+};
+
+export const getRepositoryHealth = async (owner, repo) => {
+  const response = await API.get(`/repository/${owner}/${repo}/health`);
+  return response.data;
+};

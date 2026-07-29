@@ -94,3 +94,11 @@ export const fetchContributionData = async (username) => {
 
   return data.user.contributionsCollection.contributionCalendar;
 };
+
+export const getRepositoryHealth = async (owner, repo) => {
+  const response = await axios.get(
+    `${API_URL}/repository/${owner}/${repo}/health`
+  );
+
+  return response.data;
+};

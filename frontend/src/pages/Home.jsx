@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
 import PDFReport from "../components/PDFReport";
 import SearchBar from "../components/SearchBar";
@@ -23,7 +24,9 @@ import { useTheme } from "../context/ThemeContext";
 import CareerRecommendationCard from "../components/CareerRecommendationCard";
 import ResumeAnalysisCard from "../components/ResumeAnalysisCard";
 import GrowthPredictionCard from "../components/GrowthPredictionCard";
-
+import DashboardCards from "../components/DashboardCards";
+import ContributionHeatmap from "../components/ContributionHeatmap";
+import QuickInsights from "../components/QuickInsights";
 import {
   getProfile,
   getRepositories,
@@ -53,10 +56,10 @@ function Home() {
   const [growthPrediction, setGrowthPrediction] = useState(null);
 
   // Updated handleDownloadPDF function
- const handleDownloadPDF = useReactToPrint({
-  contentRef: pdfRef,
-  documentTitle: "DevLens_Report",
-});
+  const handleDownloadPDF = useReactToPrint({
+    contentRef: pdfRef,
+    documentTitle: "DevLens_Report",
+  });
 
   const [developerScore, setDeveloperScore] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -183,14 +186,66 @@ function Home() {
       </nav>
 
       <div className="max-w-7xl mx-auto px-6 py-8">
-        <p className="text-center text-gray-400 text-lg mb-8">
-          GitHub Contribution Analyzer
-        </p>
+        {/* Header Hero Section */}
+        <div className="text-center mb-8">
+          <div className="bg-gradient-to-r from-cyan-600 via-blue-600 to-purple-700 rounded-3xl p-10 text-white shadow-xl">
+            <h1 className="text-5xl font-bold">
+              🚀 DevLens
+            </h1>
+
+            <p className="mt-4 text-xl">
+              AI Powered GitHub Contribution Analyzer
+            </p>
+
+            <div className="mt-8 flex flex-wrap justify-center gap-4">
+              <Link
+                to="/compare"
+                className="bg-white text-black px-6 py-3 rounded-xl font-semibold hover:scale-105 transition"
+              >
+                ⚖ Compare Profiles
+              </Link>
+
+              <Link
+                to="/repository-analyzer"
+                className="bg-black text-white px-6 py-3 rounded-xl font-semibold hover:scale-105 transition"
+              >
+                🤖 Repository Analyzer
+              </Link>
+            </div>
+          </div>
+        </div>
 
         {/* Search */}
         <div className="mb-8">
           <SearchBar onSearch={handleSearch} />
         </div>
+
+        {profile && (
+          <div className="mt-8">
+            <DashboardCards
+              profile={profile}
+              analytics={analytics}
+              developerScore={developerScore}
+            />
+          </div>
+        )}
+
+        {profile && (
+          <div className="mt-8">
+            <QuickInsights
+              analytics={analytics}
+              developerScore={developerScore}
+            />
+          </div>
+        )}
+
+        {profile && (
+          <div className="mt-8">
+            <ContributionHeatmap
+              username={profile.login}
+            />
+          </div>
+        )}
 
         {/* Recent Searches */}
         <RecentSearches
@@ -341,32 +396,32 @@ function Home() {
         )}
       </div>
 
-      {/* Updated Hidden PDF Container */}
+      {/* Hidden PDF Container */}
       <div
-  style={{
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "794px",
-    background: "#fff",
-    zIndex: -9999,
-    opacity: 0,
-    pointerEvents: "none",
-  }}
->
-  <div ref={pdfRef}>
-    <PDFReport
-      profile={profile}
-      analytics={analytics}
-      developerScore={developerScore}
-      aiSummary={aiSummary}
-      skills={skills}
-      careerRecommendations={careerRecommendations}
-      resumeAnalysis={resumeAnalysis}
-      growthPrediction={growthPrediction}
-    />
-  </div>
-</div>
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "794px",
+          background: "#fff",
+          zIndex: -9999,
+          opacity: 0,
+          pointerEvents: "none",
+        }}
+      >
+        <div ref={pdfRef}>
+          <PDFReport
+            profile={profile}
+            analytics={analytics}
+            developerScore={developerScore}
+            aiSummary={aiSummary}
+            skills={skills}
+            careerRecommendations={careerRecommendations}
+            resumeAnalysis={resumeAnalysis}
+            growthPrediction={growthPrediction}
+          />
+        </div>
+      </div>
     </div>
   );
 }
