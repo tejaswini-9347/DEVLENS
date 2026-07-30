@@ -4,6 +4,7 @@ import {
   fetchFollowers,
   fetchFollowing,
   fetchContributionData,
+  getRepositoryReadme,
 } from "../services/githubService.js";
 import { calculateAnalytics } from "../utils/analytics.js";
 import { calculateActivityAnalytics } from "../utils/activityAnalytics.js";
@@ -13,6 +14,13 @@ import detectSkills from "../utils/skillDetection.js";
 import generateCareerRecommendations from "../utils/careerRecommendation.js";
 import analyzeResume from "../utils/resumeAnalysis.js";
 import predictGrowth from "../utils/growthPrediction.js";
+import axios from "axios";
+import {
+  analyzeRepository,
+  analyzeReadme,
+  generateResume,
+} from "../services/groqService.js";
+import { calculateRepositoryHealth } from "../services/repositoryHealthService.js";
 console.log("Developer Score:", calculateDeveloperScore);
 export const getGithubProfile = async (req, res) => {
   try {
@@ -422,6 +430,134 @@ export const getGrowthPrediction = async (req, res) => {
     res.status(500).json({
       message: "Failed to predict GitHub growth",
       error: error.message,
+    });
+  }
+};
+export const getRepository = async (req, res) => {
+  try {
+    const { owner, repo } = req.params;
+
+    const response = await axios.get(
+      `https://api.github.com/repos/${owner}/${repo}`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+          Accept: "application/vnd.github+json",
+        },
+      }
+    );
+
+    res.json(response.data);
+  } catch (error) {
+    console.error(error.response?.data || error.message);
+
+    res.status(500).json({
+      message: "Failed to fetch repository.",
+    });
+  }
+};
+
+export const analyzeRepo = async (req, res) => {
+  try {
+    const { owner, repo } = req.body;
+
+    const response = await axios.get(
+      `https://api.github.com/repos/${owner}/${repo}`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+          Accept: "application/vnd.github+json",
+        },
+      }
+    );
+
+    const analysis = await analyzeRepository(response.data);
+
+    res.json({
+      repository: response.data,
+      analysis,
+    });
+  } catch (error) {
+  console.error("========== AI ERROR ==========");
+  console.error(error);
+
+  if (error.response) {
+    console.error(error.response.data);
+  }
+
+  res.status(500).json({
+    message: error.message,
+  });
+}
+};
+export const getRepositoryHealth = async (req, res) => {
+  try {
+    const { owner, repo } = req.params;
+
+    const response = await axios.get(
+      `https://api.github.com/repos/${owner}/${repo}`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+        },
+      }
+    );
+
+    const health = calculateRepositoryHealth(response.data);
+
+    res.json(health);
+  } catch (error) {
+    console.error(error.message);
+
+    res.status(500).json({
+      message: "Failed to calculate repository health",
+    });
+  }
+};
+export const analyzeRepositoryReadme = async (req, res) => {
+  try {
+    const { owner, repo } = req.params;
+
+    const readme = await getRepositoryReadme(owner, repo);
+
+    const analysis = await analyzeReadme(readme);
+
+    res.json({
+      success: true,
+      analysis,
+    });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+export const generateAIResume = async (req, res) => {
+  try {
+    const { username } = req.params;
+
+    // Fetch GitHub profile
+    const profile = await fetchUserProfile(username);
+
+    // Fetch repositories
+    const repositories = await fetchUserRepositories(username);
+
+    // Generate AI Resume
+    const resume = await generateResume(profile, repositories);
+
+    res.json({
+      success: true,
+      resume,
+    });
+  } catch (error) {
+    console.error("Resume Error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: error.message,
     });
   }
 };

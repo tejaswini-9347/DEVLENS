@@ -14,7 +14,10 @@
     "axios": "^1.18.1",
     "chart.js": "^4.5.1",
     "framer-motion": "^12.42.2",
+<<<<<<< HEAD
     "groq-sdk": "^1.4.1",
+=======
+>>>>>>> main
     "html-to-image": "^1.11.13",
     "html2pdf.js": "^0.14.0",
     "jspdf": "^4.2.1",

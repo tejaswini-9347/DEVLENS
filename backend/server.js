@@ -1,11 +1,20 @@
 import express from "express";
 import cors from "cors";
+import githubRoutes from "./routes/githubRoutes.js";
 import dotenv from "dotenv";
 
-import githubRoutes from "./routes/githubRoutes.js";
-
 dotenv.config();
-console.log("GitHub Token:", process.env.GITHUB_TOKEN?.slice(0, 8));
+
+// Debug logs
+console.log(
+  "GitHub Token Loaded:",
+  process.env.GITHUB_TOKEN ? "YES ✅" : "NO ❌"
+);
+
+console.log(
+  "Gemini API Key Loaded:",
+  process.env.GEMINI_API_KEY ? "YES ✅" : "NO ❌"
+);
 
 const app = express();
 
@@ -21,5 +30,5 @@ app.use("/api/github", githubRoutes);
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });

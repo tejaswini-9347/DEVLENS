@@ -13,6 +13,11 @@ import {
   getCareerRecommendations,
   getResumeAnalysis,
   getGrowthPrediction,
+  getRepository,
+  analyzeRepo,
+  analyzeRepositoryReadme,
+  getRepositoryHealth,
+  generateAIResume,
 } from "../controllers/githubController.js";
 
 const router = express.Router();
@@ -32,4 +37,23 @@ router.get(
   getCareerRecommendations
 );
 router.get("/resume-analysis/:username", getResumeAnalysis);
+
+router.get("/repository/:owner/:repo", getRepository);
+
+router.post("/repository/analyze", analyzeRepo);
+
+router.get(
+  "/repository/:owner/:repo/health",
+  getRepositoryHealth
+);
+
+router.get(
+  "/repository/:owner/:repo/readme-analysis",
+  analyzeRepositoryReadme
+);
+
+router.get(
+  "/resume/:username",
+  generateAIResume
+);
 export default router;
