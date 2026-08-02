@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
-
+import toast from "react-hot-toast";
 export default function RepositorySearch({ onSearch }) {
   const [repo, setRepo] = useState("");
 
@@ -8,7 +8,7 @@ export default function RepositorySearch({ onSearch }) {
     e.preventDefault();
 
     if (!repo.trim()) {
-      alert("Please enter a repository.");
+      toast.error("Please enter a repository.");
       return;
     }
 
