@@ -3,7 +3,8 @@ import RepositorySearch from "../components/RepositorySearch";
 import RepositoryDetails from "../components/RepositoryDetails";
 import AIAnalysis from "../components/AIAnalysis";
 import RepositoryHealthCard from "../components/RepositoryHealthCard";
-
+import toast from "react-hot-toast";
+import Loader from "../components/Loader";
 import {
   getRepository,
   analyzeRepository,
@@ -23,7 +24,7 @@ export default function RepositoryAnalyzer() {
       const [owner, repo] = repoName.split("/");
 
       if (!owner || !repo) {
-        alert("Enter repository as owner/repository");
+        toast.error("Enter repository as owner/repository");
         return;
       }
 
@@ -43,7 +44,7 @@ console.log("Health Data:", healthData);
 setHealth(healthData);
     } catch (error) {
       console.error(error);
-      alert("Repository not found.");
+      toast.error("Repository not found.");
     } finally {
       setLoading(false);
     }
@@ -58,10 +59,20 @@ setHealth(healthData);
       <RepositorySearch onSearch={handleSearch} />
 
       {loading && (
-        <p className="mt-8 text-blue-400 animate-pulse">
-          Analyzing repository...
-        </p>
-      )}
+  <div className="mt-8 bg-slate-900 border border-slate-700 rounded-xl p-6 flex items-center gap-5 shadow-lg">
+    <Loader />
+
+    <div>
+      <h3 className="text-lg font-semibold text-white">
+        Analyzing Repository...
+      </h3>
+
+      <p className="text-slate-400">
+        AI is reading repository information and generating insights.
+      </p>
+    </div>
+  </div>
+)}
 
       {repository && (
         <>

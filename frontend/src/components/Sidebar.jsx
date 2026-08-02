@@ -1,31 +1,57 @@
 import { Link, useLocation } from "react-router-dom";
+
 import {
   FaHome,
   FaBalanceScale,
   FaRobot,
+  FaFileAlt,
+  FaCog,
+  FaInfoCircle,
   FaGithub,
 } from "react-icons/fa";
 
 export default function Sidebar() {
   const location = useLocation();
 
-  const menu = [
-    {
-      name: "Home",
-      path: "/",
-      icon: <FaHome />,
-    },
-    {
-      name: "Compare",
-      path: "/compare",
-      icon: <FaBalanceScale />,
-    },
-    {
-      name: "Repository Analyzer",
-      path: "/repository-analyzer",
-      icon: <FaRobot />,
-    },
-  ];
+ const menu = [
+  {
+    name: "Home",
+    path: "/",
+    icon: <FaHome />,
+  },
+  
+  {
+    name: "Compare",
+    path: "/compare",
+    icon: <FaBalanceScale />,
+  },
+  {
+    name: "Repository Analyzer",
+    path: "/repository-analyzer",
+    icon: <FaRobot />,
+  },
+  {
+    name: "README Analyzer",
+    path: "/readme-analyzer",
+    icon: <FaFileAlt />,
+  },
+  
+  {
+    name: "AI Resume Builder",
+    path: "/resume-builder",
+    icon: <FaFileAlt />,
+  },
+  {
+    name: "Settings",
+    path: "/settings",
+    icon: <FaCog />,
+  },
+  {
+    name: "About",
+    path: "/about",
+    icon: <FaInfoCircle />,
+  },
+];
 
   return (
     <aside className="relative w-72 min-h-screen bg-slate-950 text-white shadow-xl border-r border-slate-800 flex flex-col">
@@ -67,13 +93,11 @@ export default function Sidebar() {
           <p className="text-xs text-slate-400 mt-1">
             AI Powered GitHub Analyzer
           </p>
+          <p className="text-xs text-slate-400 mt-1">
+            @ 2026 karthik
+          </p>
         </div>
-        <Link
-  to="/resume-builder"
-  className="hover:text-blue-500"
->
-  AI Resume Builder
-</Link>
+        
       </div>
     </aside>
   );
