@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import ResumeTemplate from "../components/resume/ResumeTemplate";
 import { downloadResume } from "../utils/downloadResume";
+import toast from "react-hot-toast";
+import Loader from "../components/Loader";
 export default function ResumeBuilder() {
   const [username, setUsername] = useState("");
   const [resume, setResume] = useState("");
@@ -10,7 +12,7 @@ export default function ResumeBuilder() {
 
   const generateResume = async () => {
     if (!username.trim()) {
-      alert("Please enter a GitHub username.");
+      toast.error("Please enter a GitHub username.");
       return;
     }
 
@@ -30,9 +32,9 @@ export default function ResumeBuilder() {
   if (error.response) {
     console.log("Response Data:", error.response.data);
     console.log("Status:", error.response.status);
-    alert(JSON.stringify(error.response.data));
+    toast.error(JSON.stringify(error.response.data));
   } else {
-    alert(error.message);
+    toast.error(error.message);
   }
 } finally {
       setLoading(false);
@@ -42,7 +44,7 @@ export default function ResumeBuilder() {
   const copyResume = async () => {
     try {
       await navigator.clipboard.writeText(resume);
-      alert("Resume copied successfully!");
+      toast.success("Resume copied successfully!");
     } catch (error) {
       console.error(error);
     }
@@ -86,10 +88,20 @@ export default function ResumeBuilder() {
         </div>
 
         {loading && (
-          <div className="flex justify-center mt-10">
-            <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-          </div>
-        )}
+  <div className="mt-8 bg-slate-900 border border-slate-700 rounded-xl p-6 flex items-center gap-5 shadow-lg">
+    <Loader />
+
+    <div>
+      <h3 className="text-lg font-semibold">
+        Generating Resume...
+      </h3>
+
+      <p className="text-slate-400">
+        AI is creating your ATS-friendly resume.
+      </p>
+    </div>
+  </div>
+)}
 
         {resume && profile && (
           <>

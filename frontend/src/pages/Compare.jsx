@@ -2,7 +2,8 @@ import { useState, useRef } from "react";
 import ComparisonChart from "../components/ComparisonChart";
 import jsPDF from "jspdf";
 import * as htmlToImage from "html-to-image";
-
+import toast from "react-hot-toast";
+import Loader from "../components/Loader";
 export default function Compare() {
   const [username1, setUsername1] = useState("");
   const [username2, setUsername2] = useState("");
@@ -148,7 +149,7 @@ export default function Compare() {
   };
     const handleCompare = async () => {
     if (!username1.trim() || !username2.trim()) {
-      alert("Please enter both GitHub usernames.");
+      toast.error("Please enter both GitHub usernames.");
       return;
     }
 
@@ -176,13 +177,13 @@ export default function Compare() {
 
       // User not found
       if (res1.status === 404 || res2.status === 404) {
-        alert("One or both GitHub usernames were not found.");
+        toast.error("One or both GitHub usernames were not found.");
         return;
       }
 
       // Rate limit
       if (res1.status === 403 || res2.status === 403) {
-        alert(
+        toast.error(
           "GitHub API rate limit exceeded.\nPlease add your GitHub Token or try again later."
         );
         return;
@@ -212,7 +213,7 @@ export default function Compare() {
       ]);
 
       if (repoRes1.status === 403 || repoRes2.status === 403) {
-        alert("GitHub API rate limit exceeded while fetching repositories.");
+        toast.error("GitHub API rate limit exceeded while fetching repositories.");
         return;
       }
 
@@ -246,7 +247,7 @@ export default function Compare() {
       );
     } catch (error) {
       console.error(error);
-      alert("Failed to fetch GitHub profiles.");
+      toast.error("Failed to fetch GitHub profiles.");
     } finally {
       setLoading(false);
     }
@@ -290,7 +291,7 @@ export default function Compare() {
     );
   } catch (error) {
     console.error(error);
-    alert("Failed to generate PDF.");
+    toast.error("Failed to generate PDF.");
   }
 };
 
@@ -337,14 +338,21 @@ return (
         onClick={handleCompare}
         className="w-full bg-cyan-600 hover:bg-cyan-700 p-3 rounded-lg font-semibold transition"
       >
-        {loading ? (
-          <div className="flex justify-center items-center gap-2">
-            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-            Comparing...
-          </div>
-        ) : (
-          "Compare Profiles"
-        )}
+       {loading && (
+  <div className="mt-8 bg-slate-900 border border-slate-700 rounded-xl p-6 flex items-center gap-5 shadow-lg">
+    <Loader />
+
+    <div>
+      <h3 className="text-lg font-semibold">
+        Comparing Profiles...
+      </h3>
+
+      <p className="text-slate-400">
+        DevLens is comparing repositories, skills, and developer statistics.
+      </p>
+    </div>
+  </div>
+)}
       </button>
 
       {profile1 && profile2 && (

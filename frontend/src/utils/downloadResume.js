@@ -1,11 +1,11 @@
 import { toPng } from "html-to-image";
 import jsPDF from "jspdf";
-
+import toast from "react-hot-toast";
 export const downloadResume = async () => {
   const element = document.getElementById("resume-template");
 
   if (!element) {
-    alert("Resume template not found!");
+    toast.error("Resume template not found!");
     return;
   }
 
@@ -29,6 +29,6 @@ export const downloadResume = async () => {
     pdf.save("Resume.pdf");
   } catch (err) {
     console.error(err);
-    alert("Failed to generate PDF");
+    toast.error("Failed to generate PDF");
   }
 };
