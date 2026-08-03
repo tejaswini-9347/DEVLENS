@@ -17,7 +17,7 @@ export default function Login() {
   });
 
   const [loading, setLoading] = useState(false);
-
+   
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -35,6 +35,9 @@ export default function Login() {
         "http://localhost:5000/api/auth/login",
         form
       );
+
+      console.log(res.data);
+
 
       login(res.data.token, res.data.user);
 

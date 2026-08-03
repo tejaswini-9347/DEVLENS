@@ -297,7 +297,7 @@ export default function Compare() {
 
 return (
   <div className="min-h-screen bg-gray-950 text-white flex justify-center items-center p-8">
-    <div className="w-full max-w-6xl bg-gray-900 rounded-xl p-8 shadow-lg">
+    <div className="w-full max-w-5xl mx-auto bg-slate-900 rounded-3xl border border-slate-700 shadow-2xl p-10">
 
       <h1 className="text-4xl font-bold text-center mb-8">
         GitHub Profile Comparison
@@ -334,26 +334,43 @@ return (
       </div>
 
       {/* Compare Button */}
-      <button
-        onClick={handleCompare}
-        className="w-full bg-cyan-600 hover:bg-cyan-700 p-3 rounded-lg font-semibold transition"
-      >
-       {loading && (
+      {/* Compare Button */}
+
+<div className="flex justify-center mt-8">
+
+  <button
+    onClick={handleCompare}
+    disabled={loading}
+    className="px-12 py-4 rounded-xl bg-cyan-600 hover:bg-cyan-700 disabled:bg-slate-700 font-bold text-lg shadow-lg transition"
+  >
+    {loading ? "Comparing..." : "🔍 Compare Developers"}
+  </button>
+
+</div>
+
+{/* Loading */}
+
+{loading && (
+
   <div className="mt-8 bg-slate-900 border border-slate-700 rounded-xl p-6 flex items-center gap-5 shadow-lg">
+
     <Loader />
 
     <div>
+
       <h3 className="text-lg font-semibold">
         Comparing Profiles...
       </h3>
 
       <p className="text-slate-400">
-        DevLens is comparing repositories, skills, and developer statistics.
+        DevLens is comparing repositories, skills and developer statistics...
       </p>
+
     </div>
+
   </div>
+
 )}
-      </button>
 
       {profile1 && profile2 && (
         <>

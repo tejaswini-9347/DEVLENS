@@ -1,5 +1,5 @@
 import { Routes, Route, useLocation } from "react-router-dom";
-
+import Profile from "./pages/Profile";
 import Sidebar from "./components/Sidebar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./pages/Home";
@@ -40,6 +40,11 @@ function App() {
   <Route path="/register" element={<Register />} />
 
   <Route path="/forgot-password" element={<ForgotPassword />} />
+
+ <Route
+  path="/profile/:username"
+  element={<Profile />}
+/>
   <Route
   path="/reset-password/:token"
   element={<ResetPassword />}
