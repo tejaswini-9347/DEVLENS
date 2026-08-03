@@ -3,9 +3,31 @@ import {
   FaRobot,
   FaMoon,
   FaCodeBranch,
+  FaSignOutAlt,
 } from "react-icons/fa";
 
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import toast from "react-hot-toast";
+
 export default function Settings() {
+  const navigate = useNavigate();
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    const confirmLogout = window.confirm(
+      "Are you sure you want to logout?"
+    );
+
+    if (!confirmLogout) return;
+
+    logout();
+
+    toast.success("Logged out successfully.");
+
+    navigate("/login");
+  };
+
   return (
     <div className="min-h-screen bg-slate-950 text-white p-8">
       <div className="max-w-5xl mx-auto">
@@ -67,6 +89,20 @@ export default function Settings() {
               Dark Mode
             </p>
           </div>
+
+        </div>
+
+        {/* Logout */}
+
+        <div className="mt-10 flex justify-end">
+
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-3 bg-red-600 hover:bg-red-700 transition px-6 py-3 rounded-lg font-semibold"
+          >
+            <FaSignOutAlt />
+            Logout
+          </button>
 
         </div>
 

@@ -14,12 +14,11 @@
   "license": "ISC",
   "dependencies": {
     "@google/genai": "^2.13.0",
-    "@prisma/client": "^7.9.0",
+    "@prisma/client": "^6.16.2",
     "axios": "^1.18.1",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
-    "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "express-rate-limit": "^8.6.0",
     "express-session": "^1.19.0",
@@ -36,9 +35,10 @@
     "passport": "^0.7.0",
     "passport-github2": "^0.1.12",
     "pdfkit": "^0.19.1",
-    "prisma": "^7.9.0"
+    "prisma": "^6.16.2"
   },
   "devDependencies": {
+    "dotenv": "^17.4.2",
     "nodemon": "^3.1.14"
   }
 }

@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import githubRoutes from "./routes/githubRoutes.js";
 import dotenv from "dotenv";
-
+import authRoutes from "./routes/authRoutes.js";
 dotenv.config();
 
 // Debug logs
@@ -26,6 +26,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/github", githubRoutes);
+app.use("/api/auth", authRoutes);
 
 const PORT = process.env.PORT || 5000;
 
