@@ -68,7 +68,7 @@ export default function Login() {
           </h1>
 
           <p className="text-slate-400 mt-2">
-            Login to your DevLens account
+            Login to your CodeVista account
           </p>
 
         </div>

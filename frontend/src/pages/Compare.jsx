@@ -363,7 +363,7 @@ return (
       </h3>
 
       <p className="text-slate-400">
-        DevLens is comparing repositories, skills and developer statistics...
+        CodeVista is comparing repositories, skills and developer statistics...
       </p>
 
     </div>

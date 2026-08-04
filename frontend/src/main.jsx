@@ -6,13 +6,10 @@ import { HelmetProvider } from "react-helmet-async";
 
 import App from "./App";
 import "./index.css";
-
-import { ThemeProvider } from "./context/ThemeContext";
 import { AuthProvider } from "./context/AuthContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <ThemeProvider>
       <AuthProvider>
         <HelmetProvider>
           <BrowserRouter>
@@ -32,6 +29,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           </BrowserRouter>
         </HelmetProvider>
       </AuthProvider>
-    </ThemeProvider>
   </React.StrictMode>
 );

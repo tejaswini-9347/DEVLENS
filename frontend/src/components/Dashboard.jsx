@@ -38,7 +38,7 @@ export default function Dashboard() {
 
       <div>
         <h1 className="text-4xl font-bold">
-          Welcome to DevLens 🚀
+          Welcome to 💻 CodeVista
         </h1>
 
         <p className="text-gray-500 mt-2">

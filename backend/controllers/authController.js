@@ -177,9 +177,9 @@ export const forgotPassword = async (req, res) => {
 
     await sendEmail(
       email,
-      "Reset Your DevLens Password",
+      "Reset Your 💻 CodeVista Password",
       `
-      <h2>DevLens Password Reset</h2>
+      <h2>💻 CodeVista Password Reset</h2>
 
       <p>You requested to reset your password.</p>
 

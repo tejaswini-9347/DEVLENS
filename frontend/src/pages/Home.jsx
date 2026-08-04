@@ -1,31 +1,18 @@
 import { Link } from "react-router-dom";
-import ThemeToggle from "../components/ThemeToggle";
 import SearchBar from "../components/SearchBar";
-import { useTheme } from "../context/ThemeContext";
 
 export default function Home() {
-  const { darkMode } = useTheme();
 
   return (
-    <div
-      className={`min-h-screen transition-all duration-300 ${
-        darkMode
-          ? "bg-slate-950 text-white"
-          : "bg-gray-100 text-gray-900"
-      }`}
-    >
+   <div className="min-h-screen bg-slate-950 text-white">
       {/* Navbar */}
 
-      <nav
-        className={`flex justify-between items-center px-8 py-5 shadow-md ${
-          darkMode ? "bg-slate-900" : "bg-white"
-        }`}
-      >
+      <nav className="flex justify-between items-center px-8 py-5 shadow-md bg-slate-900">
         <h1 className="text-3xl font-bold text-cyan-400">
-          🚀 DevLens
+          💻 CodeVista
         </h1>
 
-        <ThemeToggle />
+       
       </nav>
 
       {/* Hero */}
@@ -35,7 +22,7 @@ export default function Home() {
         <div className="bg-gradient-to-r from-cyan-600 via-blue-600 to-purple-700 rounded-3xl p-12 text-center shadow-xl">
 
           <h1 className="text-6xl font-bold text-white">
-            DevLens
+            CodeVista
           </h1>
 
           <p className="text-xl text-gray-100 mt-5">

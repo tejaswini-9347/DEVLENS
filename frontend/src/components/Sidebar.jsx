@@ -59,7 +59,7 @@ export default function Sidebar() {
       <div className="flex items-center gap-3 px-6 py-8 border-b border-slate-800">
         <FaGithub className="text-4xl text-cyan-400" />
         <div>
-          <h1 className="text-2xl font-bold">DevLens</h1>
+          <h1 className="text-2xl font-bold"> CodeVista</h1>
           <p className="text-sm text-slate-400">
             GitHub Analyzer
           </p>
@@ -88,7 +88,7 @@ export default function Sidebar() {
       <div className="absolute bottom-6 left-6 right-6">
         <div className="bg-slate-900 rounded-xl p-4 text-center border border-slate-700">
           <p className="text-cyan-400 font-semibold">
-            DevLens v1.0
+             CodeVista v1.0
           </p>
           <p className="text-xs text-slate-400 mt-1">
             AI Powered GitHub Analyzer
