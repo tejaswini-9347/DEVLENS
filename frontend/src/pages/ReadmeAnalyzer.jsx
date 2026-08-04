@@ -135,7 +135,7 @@ export default function ReadmeAnalyzer() {
 
               <p className="text-slate-400 mt-2 leading-8">
 
-                DevLens is reading the repository documentation,
+                CodeVista is reading the repository documentation,
                 extracting project details and generating AI insights.
 
               </p>
@@ -243,7 +243,7 @@ export default function ReadmeAnalyzer() {
     <div className="mt-8 rounded-3xl border border-yellow-500/20 bg-gradient-to-r from-yellow-500/5 to-orange-500/5 p-8 shadow-xl">
 
       <h2 className="text-2xl font-bold flex items-center gap-3 mb-4">
-        💡 DevLens Recommendation
+        💡 CodeVista Recommendation
       </h2>
 
       <p className="text-slate-300 leading-8">

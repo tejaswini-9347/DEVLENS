@@ -36,7 +36,7 @@ export default function Settings() {
         </h1>
 
         <p className="text-slate-400 mt-3 text-lg">
-          Manage your DevLens preferences and application information.
+          Manage your CodeVista preferences and application information.
         </p>
 
       </div>
@@ -150,7 +150,7 @@ export default function Settings() {
               </h2>
 
               <p className="text-slate-400">
-                DevLens v1.0
+                CodeVista v1.0
               </p>
 
               <p className="text-slate-500 text-sm">
@@ -188,7 +188,7 @@ export default function Settings() {
       </p>
 
       <p className="text-slate-500 text-sm mt-1">
-        Securely signed in to DevLens
+        Securely signed in to CodeVista
       </p>
 
     </div>

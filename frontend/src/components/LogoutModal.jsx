@@ -36,7 +36,7 @@ export default function LogoutModal({
 
             Are you sure you want to logout from your
             <span className="text-cyan-400 font-semibold">
-              {" "}DevLens{" "}
+              {" "} CodeVista{" "}
             </span>
             account?
 

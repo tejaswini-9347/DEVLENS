@@ -162,7 +162,7 @@ const handleAddFavorite = (profile) => {
 
   const handleDownloadPDF = useReactToPrint({
   contentRef: pdfRef,
-  documentTitle: "DevLens_Report",
+  documentTitle: "CodeVista_Report",
 });
 
 if (loading) {
@@ -445,7 +445,7 @@ return (
             onClick={handleDownloadPDF}
             className="px-8 py-4 bg-cyan-600 hover:bg-cyan-700 text-white text-lg font-semibold rounded-xl shadow-lg transition-all duration-300 hover:scale-105"
           >
-            📄 Download DevLens Report
+            📄 Download CodeVista Report
           </button>
 
         </div>

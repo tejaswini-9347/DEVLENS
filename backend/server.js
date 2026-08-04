@@ -22,7 +22,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("DevLens Backend Running 🚀");
+  res.send("💻 CodeVista Backend Running 🚀");
 });
 
 app.use("/api/github", githubRoutes);

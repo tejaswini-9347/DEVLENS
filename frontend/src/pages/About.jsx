@@ -63,7 +63,7 @@ export default function About() {
 
           <h1 className="text-7xl font-black bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent">
 
-            DevLens
+            CodeVista
 
           </h1>
 
@@ -189,7 +189,7 @@ export default function About() {
       <section className="max-w-7xl mx-auto px-8 pb-24">
 
         <h2 className="text-5xl font-bold text-center mb-16">
-          How DevLens Works
+          How CodeVista Works
         </h2>
 
         <div className="grid md:grid-cols-4 gap-8">
@@ -203,7 +203,7 @@ export default function About() {
             {
               no: "02",
               title: "Analyze",
-              desc: "DevLens collects repositories, stars, forks and activity.",
+              desc: "CodeVista collects repositories, stars, forks and activity.",
             },
             {
               no: "03",
@@ -305,7 +305,7 @@ export default function About() {
         <div className="rounded-[40px] bg-gradient-to-r from-cyan-600 via-blue-600 to-purple-700 p-16 text-center shadow-2xl">
 
           <h2 className="text-5xl font-black">
-            Ready to Explore DevLens?
+            Ready to Explore CodeVista?
           </h2>
 
           <p className="text-xl mt-6 text-slate-100 max-w-3xl mx-auto leading-9">
@@ -326,7 +326,7 @@ export default function About() {
       <footer className="border-t border-slate-800 py-12 text-center">
 
         <h2 className="text-3xl font-black bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
-          DevLens
+          CodeVista
         </h2>
 
         <p className="text-slate-500 mt-4">
@@ -348,7 +348,7 @@ export default function About() {
         </div>
 
         <p className="mt-8 text-slate-600">
-          © 2026 DevLens • Built with ❤️ for Developers
+          © 2026 CodeVista • Built with ❤️ for Developers
         </p>
 
       </footer>

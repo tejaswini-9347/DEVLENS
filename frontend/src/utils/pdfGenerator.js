@@ -5,7 +5,7 @@ export function generatePDF(data) {
   const doc = new jsPDF();
 
   doc.setFontSize(22);
-  doc.text("DevLens GitHub Report", 14, 20);
+  doc.text("CodeVista GitHub Report", 14, 20);
 
   doc.setFontSize(12);
   doc.text(`Username: ${data.profile.login}`, 14, 35);
@@ -64,5 +64,5 @@ export function generatePDF(data) {
     ],
   });
 
-  doc.save("DevLens_Report.pdf");
+  doc.save("CodeVista_Report.pdf");
 }
